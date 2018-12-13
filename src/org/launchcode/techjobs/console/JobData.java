@@ -66,22 +66,31 @@ public class JobData {
      * @return List of all jobs matching the criteria
      */
     public static ArrayList<HashMap<String, String>> findByColumnAndValue(String column, String value) {
-
         // load data, if not already loaded
         loadData();
-
         ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
-
         for (HashMap<String, String> row : allJobs) {
-
-            String aValue = row.get(column);
-
+            String aValue = row.get(column).toLowerCase();
             if (aValue.contains(value)) {
                 jobs.add(row);
             }
         }
-
         return jobs;
+    }
+    public static ArrayList<HashMap<String,String>> findByValue(String searchTerm) {
+        // load data, if not already loaded
+        loadData();
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+        ArrayList<HashMap<String, String>> displayJobs = new ArrayList<>();
+        for (HashMap<String, String> row : allJobs) {
+            for (String value: row.keySet()){
+                String val = row.get(value).toLowerCase();
+                if (val.contains(searchTerm)) {
+                    displayJobs.add(row);
+                }
+            }
+
+        }return displayJobs;
     }
 
     /**
